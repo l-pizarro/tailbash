@@ -1,0 +1,28 @@
+#!/bin/bash
+
+vue create .
+npm install tailwindcss
+npm install autoprefixer
+npm install postcss-cli
+mv package.json temp.json
+jq -r '.scripts.watch |= "postcss src/css/tailwind.css -o public/build/tailwind.css --watch"' temp.json > package.json
+rm temp.json
+mv package.json temp.json
+jq 'del(.postcss)' temp.json > package.json
+rm temp.json
+mkdir ./src/css
+touch ./src/css/tailwind.css
+echo "@tailwind base;
+@tailwind components;
+@tailwind utilities;" > ./src/css/tailwind.css
+touch postcss.config.js
+echo "module.exports = {
+    plugins: [
+      // ...
+      require('tailwindcss'),
+      require('autoprefixer'),
+      // ...
+    ]
+  }" > postcss.config.js
+
+
