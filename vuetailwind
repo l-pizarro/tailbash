@@ -24,5 +24,4 @@ echo "module.exports = {
       // ...
     ]
   }" > postcss.config.js
-
-
+npx tailwind init
